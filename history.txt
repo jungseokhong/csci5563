@@ -1,0 +1,234 @@
+    1  poweroff
+    2  poweroff
+    3  ls
+    4  sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+    5  sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+    6  sudo apt update
+    7  sudo apt install ros-noetic-desktop-full
+    8  echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+    9  sudo apt install ros-noetic-teleop-twist-keyboard 
+   10  sudo apt install ros-noetic-mavros
+   11  sudo apt install ros-noetic-urdfdom-py 
+   12  sudo apt install ros-noetic-joint-state-publisher-gui 
+   13  sudo apt install ros-noetic-gazebo-ros
+   14  sudo apt install ros-noetic-robot-state-publisher
+   15  sudo apt install liburdfdom-tools
+   16  ls
+   17  mkdir -p loco_ws/src
+   18  cd loco_ws/
+   19  catkin_make
+   20  cd src/
+   21  ls
+   22  git clone https://github.umn.edu/loco-auv/loco_description
+   23  sudo apt install git
+   24  git clone https://github.umn.edu/loco-auv/loco_description
+   25  git clone https://github.umn.edu/loco-auv/loco_gazebo
+   26  git clone https://github.umn.edu/loco-auv/loco_pilot
+   27  git clone https://github.umn.edu/loco-auv/loco_teleop
+   28  cd ..
+   29  catkin_make
+   30  source devel/setup.bash 
+   31  roslaunch loco_gazebo pf_test.launch
+   32  roslaunch loco_gazebo loco_general.launch 
+   33  ls
+   34  cd src
+   35  git clone https://github.umn.edu/IRVLab/DMCL
+   36  ls
+   37  cd ..
+   38  catkin_make
+   39  ls
+   40  cd src/
+   41  ls loco_gazebo/src
+   42  cd ..
+   43  source devel/setup.bash 
+   44  roscore
+   45  ls
+   46  rosrun loco_gazebo dmcl_test.py
+   47  source devel/setup.bash 
+   48  rqt
+   49  rqt_graph 
+   50  source devel/setup.babash
+   51  cd src/
+   52  cd ..
+   53  source devel/setup.bash 
+   54  rosrun loco_gazebo sim_control_node.py
+   55  source devel/setup.bash 
+   56  rosrun dmcl MPF.py _initial_position:=[0,7,-2]
+   57  _map_filename:="~/loco_ws/src/DMCL/maps/pf_map.txt" _origin_z:=5
+   58  rosrun dmcl MPF.py _initial_position:=[0,7,-2] _map_filename:="~/loco_ws/src/DMCL/maps/pf_map.txt" _origin_z:=5
+   59  rosrun dmcl MPF.py _initial_position:=[0,7,-2] _map_filename:="./src/DMCL/maps/pf_map.txt" _origin_z:=5
+   60  rqt_graph 
+   61  source devel/setup.bash 
+   62  rosrun loco_gazebo dmcl_test.py
+   63  source devel/setup.bash 
+   64  rosrun dmcl MPF.py _initial_position:=[0,7,-2]
+   65  rosrun dmcl MPF.py _initial_position:=[0,7,-2] _map_filename:="./src/DMCL/maps/pf_map.txt" _origin_z:=5
+   66  ls
+   67  cd loco_ws/
+   68  ls
+   69  cd src/
+   70  ls
+   71  cd ..
+   72  source devel/setup.bash 
+   73  rosrun loco_gazebo dmcl_test.py
+   74  roslaunch loco_gazebo pf_test.launch 
+   75  ls
+   76  cd ..
+   77  ls
+   78  mkdir dmcl_ws
+   79  mkdir dmcl_ws/src
+   80  vim ~/.bashrc 
+   81  gedit .bashrc 
+   82  ls
+   83  cd dmcl_ws/
+   84  ls
+   85  catkin_make
+   86  cd src/
+   87  ls
+   88  git clone https://github.com/IRVLab/dmcl.git
+   89  git clone https://github.com/IRVLab/loco_gazebo.git
+   90  git clone https://github.com/IRVLab/loco_description.git
+   91  cd ..
+   92  ls
+   93  catking_make
+   94  catkin_make
+   95  source devel/setup.bash 
+   96  echo $ROS_PACKAGE_PATH
+   97  source devel/setup.bash 
+   98  roslaunch loco_gazebo Nokomis.launch 
+   99  source devel/setup.bash 
+  100  rosrun dmcl dmcl_test2.py 
+  101  source devel/setup.bash 
+  102  rosrun dmcl dmcl_vel_control.py _lake_name:='Nokomis' _motion_type:='linear'
+  103  source devel/setup.bash 
+  104  rosrun dmcl MPF2.py _initial_position:=[147,116,-3] _map_filename:="./src/dmcl/maps/Nokomis_map.txt" _origin_z:=0 _map_resolution:=5
+  105  cd ~
+  106  ls
+  107  python3
+  108  sudo apt-get install python3-pip
+  109  sudo apt-get update
+  110  sudo apt-get install python3-pip
+  111  cd ~
+  112  mkdir modern_cpp
+  113  cd modern_cpp/
+  114  ls
+  115  code .
+  116  sudo apt-get install python3-pip
+  117  sudo apt-get update
+  118  sudo reboot
+  119  ls
+  120  c++ hello_world.cpp 
+  121  ls
+  122  touch sift.py
+  123  gedit sift.py 
+  124  python3.6 -m sift
+  125  python3.6 sift.py 
+  126  python3.6
+  127  history
+  128  python3.6 -m pip install numpy
+  129  python3.6
+  130  python3.6 -m pip uninstall numpy
+  131  python3.6 -m pip install numpy
+  132  python3.6 -m pip -U install numpy
+  133  pip3 -h
+  134  python3.6 -m pip install numpy -U
+  135  python3.6
+  136  python3.6 sift.py 
+  137  ls
+  138  python3.6 sift.py 
+  139  gedit sift.py 
+  140  python3.6 sift.py 
+  141  ls
+  142  python3.6 sift.py 
+  143  python3.6 -m pip install scikit-learn
+  144  ls
+  145  python3.6 HW1.py 
+  146  python3.6 -m pip install matplotlib
+  147  python3.6 -m pip install -U matplotlib
+  148  python3.6 HW1.py 
+  149  python3.6 -m pip uninstall kiwisolver
+  150  python3.6 -m pip install kiwisolver
+  151  python3.6 HW1.py 
+  152  python3.6 -m pip uninstall kiwisolver
+  153  sudo python3.6 -m pip uninstall kiwisolver
+  154  python3.6 -m pip install kiwisolver
+  155  python3.6 -m pip install -U kiwisolver
+  156  python3.6 HW1.py 
+  157  python3.6 -m pip uninstall matplotlib
+  158  python3.6 -m pip install matplotlib
+  159  python3.6 HW1.py 
+  160  python3.6 -m pip install matplotlib --force-reinstall
+  161  python3.6 HW1.py 
+  162  touch test.py
+  163  python3.6 test.py 
+  164  python3.6 HW1.py 
+  165  python3.6 test.py 
+  166  python3.6 HW1.py 
+  167  python3
+  168  python3.6 HW1.py 
+  169  python3
+  170  python3.6 HW1.py 
+  171  python3.6 HW1.py 
+  172  python3
+  173  python3.6 HW1.py 
+  174  ls
+  175  cd ..
+  176  ls
+  177  git status
+  178  git init
+  179  git remote add origin https://github.com/jungseokhong/csci5563.git
+  180  git branch -M main
+  181  ls -al
+  182  rm -rf .git/
+  183  git init
+  184  rm -rf .git/
+  185  git init -b main
+  186  ls
+  187  git -h
+  188  git init -h
+  189  git init --bare main
+  190  ls
+  191  rm -rf main/
+  192  ls
+  193  git remote add origin https://github.com/jungseokhong/csci5563.git
+  194  git init
+  195  git remote add origin https://github.com/jungseokhong/csci5563.git
+  196  git add .
+  197  git commit -m "update hw1"
+  198  git push origin master
+  199  git push
+  200  git push --set-upstream origin master
+  201  rm -rf .git/
+  202  ls
+  203  git init
+  204  git add .
+  205  git commit -m "hw1 update"
+  206  git remote add origin https://github.com/jungseokhong/csci5563.git
+  207  git remote -v
+  208  git push origin master
+  209  git push
+  210  rm -rf .git/
+  211  ls
+  212  git init
+  213  git add .
+  214  git commit -m "hw1 update"
+  215  git remote add origin https://github.com/jungseokhong/csci5563.git
+  216  git branch --set-upstream-to=origin/master master
+  217  rm -rf .git/
+  218  ls
+  219  git init
+  220  git remote add origin https://github.com/jungseokhong/csci5563.git
+  221  git branch -M main
+  222  rm -rf .git/
+  223  ls
+  224  git init
+  225  git add .
+  226  git commit -m "update"
+  227  git config --global user.email "ssjason.hong@gmail.com"
+  228  git config --global user.name "Jungseok Hong"
+  229  git commit -m "update"
+  230  git remote add origin https://github.com/jungseokhong/csci5563.git
+  231  git branch -M main
+  232  git push -u origin main
+  233  ls
+  234  history > history.txt
