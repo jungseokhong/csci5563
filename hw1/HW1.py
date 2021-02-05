@@ -68,8 +68,13 @@ def EstimateH(x1, x2, ransac_n_iter, ransac_thr):
     ransac_n_iter=500
     kk = 0
     for r in range(ransac_n_iter):
-        x1_s = x1[np.random.randint(x1.shape[0], size=4)]
-        x2_s = x2[np.random.randint(x2.shape[0], size=4)]
+        s1 = np.random.randint(x1.shape[0], size=4)
+        s2 = np.random.randint(x2.shape[0], size=4)
+        x1_s = x1[s1]
+        x2_s = x2[s1]
+        if collinear(x1_s[0], x1_s[1], x1_s[2]) or collinear(x1_s[0], x1_s[1], x1_s[3]):
+            continue
+        #print(s1, s2)
         A = []
         b = []
         for i in range(len(x1_s)):
@@ -80,26 +85,24 @@ def EstimateH(x1, x2, ransac_n_iter, ransac_thr):
             b.append([xB])
             b.append([yB])
 
-        A = np.array(A)
-        b = np.array(b)
-        x = np.linalg.inv(np.transpose(A)@A)@np.transpose(A)@b
+        A = np.matrix(A)
+        b = np.matrix(b)
+        x = np.linalg.inv(A.T * A) * A.T * b
         H = np.concatenate((x,np.array([[1]])), axis=0).reshape(3,3)
     
         inlier_idx=[]
         for i, (point1, point2) in enumerate(zip(x1,x2)):
-        #print(H.shape, np.array([[point1[0],point1[1],1]]).shape)
-        #print(np.matmul(H,np.concatenate((point1,np.array([[1]])), axis=0)))
-        #print(H@np.array([[point1[0]],[point1[1]],[1]]), np.array([[point2[0]],[point2[1]],[1]]))
-        #print(np.linalg.norm(H@np.array([[point1[0]],[point1[1]],[1]]) - np.array([[point2[0]],[point2[1]],[1]])))
-            if np.linalg.norm(H@np.array([[point1[0]],[point1[1]],[1]]) - np.array([[point2[0]],[point2[1]],[1]])) < ransac_thr:
+            p2_homo = H * ((np.append(point1,1)).reshape(3,1))
+            p2_car = (p2_homo/p2_homo[2])[:2]
+            if np.linalg.norm(p2_car - point2.reshape(2,1)) < ransac_thr:
                 inlier_idx.append(i)
-    
         if len(inlier_idx) > kk:
             kk = len(inlier_idx)
-            print("here", kk)
-    
-    #print(A, A.shape, b, b.shape, x, x.shape, x.reshape(3,3))
-    return 0, 0
+            inlier_final = np.array(inlier_idx)
+            H_final = H
+        #print("here", kk)
+        
+    return H_final, inlier_final
     
 
 
@@ -121,7 +124,8 @@ def EstimateR(H, K):
     """
     
     # TODO Your code goes here
-    pass
+    R = np.linalg.inv(K) * H * K
+    return R
 
 
 def ConstructCylindricalCoord(Wc, Hc, K):
@@ -237,6 +241,10 @@ def FeatureMatchingDraw(img1, img2, x1, x2):
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
+def collinear(p0, p1, p2):
+    x1, y1 = p1[0] - p0[0], p1[1] - p0[1]
+    x2, y2 = p2[0] - p0[0], p2[1] - p0[1]
+    return abs(x1 * y2 - x2 * y1) < 1e-12
 
 if __name__ == '__main__':
     ransac_n_iter = 500
@@ -279,14 +287,14 @@ if __name__ == '__main__':
         
         # Estimate the homography between images using RANSAC
         H, inlier = EstimateH(x1, x2, ransac_n_iter, ransac_thr)
-        break
-'''
+        
         # Compute the relative rotation matrix R
         R = EstimateR(H, K)
-		
+        #FeatureMatchingDraw(img1, img2, x1[inlier], x2[inlier])
 		# Compute R_new (or R_i+1)
 		# TODO Your code goes here
-		
+        print(R,rot_list[-1])
+        R_new = R*rot_list[-1]
         rot_list.append(R_new)
 
     Him = im_list[0].shape[0]
@@ -297,7 +305,7 @@ if __name__ == '__main__':
 	
     canvas = np.zeros((Hc, Wc, 3), dtype=np.uint8)
     p = ConstructCylindricalCoord(Wc, Hc, K)
-
+'''
     fig = plt.figure('HW1')
     plt.axis('off')
     plt.ion()
